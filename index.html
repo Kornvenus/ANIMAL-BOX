@@ -172,6 +172,7 @@
             max-width: 90%;
             max-height: 90%;
             border-radius: 10px;
+            object-fit: contain; /* เพิ่มเพื่อให้รูปภาพไม่บิดเบี้ยว */
         }
 
         .draggable-item:active {
@@ -234,6 +235,7 @@
         .drop-zone .draggable-item img {
             max-width: 90%;
             max-height: 90%;
+            object-fit: contain; /* เพิ่มเพื่อให้รูปภาพไม่บิดเบี้ยว */
         }
 
         .buttons {
@@ -401,7 +403,7 @@
             color: #FFD700;
         }
 
-        /* ตรงนี้คือการจัดสไตล์ของ input email ที่มาจาก Formspree */
+        /* Input email field styling */
         .rating-feedback-section input[type="email"] {
             width: calc(100% - 40px);
             padding: 15px;
@@ -409,7 +411,7 @@
             border-radius: 10px;
             font-family: 'Sarabun', sans-serif;
             font-size: 1.1em;
-            margin-bottom: 15px; /* ลด margin-bottom เพื่อให้ดูดีขึ้น */
+            margin-bottom: 15px;
         }
 
         textarea {
@@ -427,7 +429,7 @@
         #submitFeedbackButton {
             background-color: #00bcd4;
             color: white;
-            padding: 12px 25px; /* Adjust padding to match other buttons */
+            padding: 12px 25px;
             font-size: 1.2em;
             border: none;
             border-radius: 10px;
@@ -630,28 +632,28 @@
 
 
         const allItems = [
-            { id: 'item1', src: 'https://via.placeholder.com/100/FFD700/000000?text=แมว', type: 'living', alt: 'แมว' },
-            { id: 'item2', src: 'https://via.placeholder.com/100/FF6347/000000?text=หมา', type: 'living', alt: 'หมา' },
-            { id: 'item3', 'src': 'https://via.placeholder.com/100/ADD8E6/000000?text=ต้นไม้', type: 'living', alt: 'ต้นไม้' },
-            { id: 'item4', src: 'https://via.placeholder.com/100/98FB98/000000?text=ปลา', type: 'living', alt: 'ปลา' },
-            { id: 'item5', src: 'https://via.placeholder.com/100/FFB6C1/000000?text=ผีเสื้อ', type: 'living', alt: 'ผีเสื้อ' },
-            { id: 'item6', src: 'https://via.placeholder.com/100/FFDAB9/000000?text=คน', type: 'living', alt: 'คน' },
-            { id: 'item7', src: 'https://via.placeholder.com/100/E0FFFF/000000?text=ไก่', type: 'living', alt: 'ไก่' },
-            { id: 'item8', src: 'https://via.placeholder.com/100/FFE4B5/000000?text=วัว', type: 'living', alt: 'วัว' },
-            { id: 'item9', src: 'https://via.placeholder.com/100/F08080/000000?text=หนอน', type: 'living', alt: 'หนอน' },
-            { id: 'item10', src: 'https://via.placeholder.com/100/DDA0DD/000000?text=ดอกไม้', type: 'living', alt: 'ดอกไม้' },
+    { id: 'item1', src: 'แมว.png', type: 'living', alt: 'แมว' }, // เปลี่ยนเป็น path ของรูปแมว
+    { id: 'item2', src: 'หมา.png', type: 'living', alt: 'หมา' }, // เปลี่ยนเป็น path ของรูปหมา
+    { id: 'item3', src: 'ต้นไม้.png', type: 'living', alt: 'ต้นไม้' }, // เปลี่ยนเป็น path ของรูปต้นไม้
+    { id: 'item4', src: 'ปลา.png', type: 'living', alt: 'ปลา' }, 
+    { id: 'item5', src: 'ผีเสื้อ.png', type: 'living', alt: 'ผีเสื้อ' }, 
+    { id: 'item6', src: 'คน.png', type: 'living', alt: 'คน' }, 
+    { id: 'item7', src: 'ไก่.png', type: 'living', alt: 'ไก่' }, 
+    { id: 'item8', src: 'images/cow.jpg', type: 'living', alt: 'วัว' }, 
+    { id: 'item9', src: 'หนอน.png', type: 'living', alt: 'หนอน' }, 
+    { id: 'item10', src: 'ดอกไม้.png', type: 'living', alt: 'ดอกไม้' }, 
 
-            { id: 'item11', src: 'https://via.placeholder.com/100/A9A9A9/000000?text=ก้อนหิน', type: 'non-living', alt: 'ก้อนหิน' },
-            { id: 'item12', src: 'https://via.placeholder.com/100/B0C4DE/000000?text=รถยนต์', type: 'non-living', alt: 'รถยนต์' },
-            { id: 'item13', src: 'https://via.placeholder.com/100/CD853F/000000?text=ดินสอ', type: 'non-living', alt: 'ดินสอ' },
-            { id: 'item14', src: 'https://via.placeholder.com/100/F5DEB3/000000?text=หนังสือ', type: 'non-living', alt: 'หนังสือ' },
-            { id: 'item15', src: 'https://via.placeholder.com/100/E6E6FA/000000?text=แก้วน้ำ', type: 'non-living', alt: 'แก้วน้ำ' },
-            { id: 'item16', src: 'https://via.placeholder.com/100/87CEEB/000000?text=เมฆ', type: 'non-living', alt: 'เมฆ' },
-            { id: 'item17', src: 'https://via.placeholder.com/100/DAA520/000000?text=เหรียญ', type: 'non-living', alt: 'เหรียญ' },
-            { id: 'item18', src: 'https://via.placeholder.com/100/D2B48C/000000?text=โต๊ะ', type: 'non-living', alt: 'โต๊ะ' },
-            { id: 'item19', src: 'https://via.placeholder.com/100/B0E0E6/000000?text=ลูกบอล', type: 'non-living', alt: 'ลูกบอล' },
-            { id: 'item20', src: 'https://via.placeholder.com/100/F0F8FF/000000?text=รองเท้า', type: 'non-living', alt: 'รองเท้า' }
-        ];
+    { id: 'item11', src: 'images/rock.jpg', type: 'non-living', alt: 'ก้อนหิน' }, 
+    { id: 'item12', src: 'images/car.png', type: 'non-living', alt: 'รถยนต์' }, 
+    { id: 'item13', src: 'images/pencil.jpg', type: 'non-living', alt: 'ดินสอ' }, 
+    { id: 'item14', src: 'images/book.png', type: 'non-living', alt: 'หนังสือ' }, 
+    { id: 'item15', src: 'images/glass.jpg', type: 'non-living', alt: 'แก้วน้ำ' }, 
+    { id: 'item16', src: 'images/cloud.png', type: 'non-living', alt: 'เมฆ' }, 
+    { id: 'item17', src: 'images/coin.jpg', type: 'non-living', alt: 'เหรียญ' }, 
+    { id: 'item18', src: 'images/table.png', type: 'non-living', alt: 'โต๊ะ' }, 
+    { id: 'item19', src: 'images/ball.jpg', type: 'non-living', alt: 'ลูกบอล' }, 
+    { id: 'item20', src: 'images/shoe.png', type: 'non-living', alt: 'รองเท้า' } 
+    ];  
 
         let currentPage = 0;
         const itemsPerPage = 20; // จำนวนรายการต่อหน้า
