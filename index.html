@@ -18,6 +18,7 @@
             margin: 0;
             overflow-x: hidden;
             position: relative;
+            box-sizing: border-box;
         }
 
         .background-elements {
@@ -276,6 +277,7 @@
 
         .pagination-buttons {
             margin-top: 20px;
+            margin-bottom: 50px; /* เพิ่ม margin-bottom เพื่อให้มีพื้นที่ด้านล่าง */
             display: flex;
             justify-content: center;
             gap: 15px;
@@ -362,7 +364,7 @@
             border: 2px solid #f44336;
         }
 
-        /* Rating and Feedback Section - Now a FORM */
+        /* Rating and Feedback Section */
         .rating-feedback-section {
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
@@ -399,6 +401,17 @@
             color: #FFD700;
         }
 
+        /* ตรงนี้คือการจัดสไตล์ของ input email ที่มาจาก Formspree */
+        .rating-feedback-section input[type="email"] {
+            width: calc(100% - 40px);
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1.1em;
+            margin-bottom: 15px; /* ลด margin-bottom เพื่อให้ดูดีขึ้น */
+        }
+
         textarea {
             width: calc(100% - 40px);
             padding: 15px;
@@ -414,7 +427,7 @@
         #submitFeedbackButton {
             background-color: #00bcd4;
             color: white;
-            padding: 12px 25px;
+            padding: 12px 25px; /* Adjust padding to match other buttons */
             font-size: 1.2em;
             border: none;
             border-radius: 10px;
@@ -428,10 +441,12 @@
             transform: translateY(-2px);
         }
 
+        /* Hidden input for rating */
         .hidden-rating-input {
             display: none;
         }
 
+        /* Link to feedback display page */
         .feedback-link {
             margin-top: 15px;
             font-size: 1.1em;
@@ -447,6 +462,7 @@
             text-decoration: underline;
         }
 
+        /* Styles for the separate feedback_display.html (if you create it) */
         .feedback-display-container {
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -523,7 +539,7 @@
         <p class="instruction">ลากรูปภาพไปวางในช่อง "สิ่งมีชีวิต" หรือ "สิ่งไม่มีชีวิต" ให้ถูกต้อง</p>
 
         <div class="image-gallery" id="imageGallery">
-            </div>
+        </div>
 
         <div class="drop-zones">
             <div class="drop-zone" id="livingThingsDropZone" data-type="living">
@@ -556,26 +572,40 @@
         </div>
     </div>
 
-    <form class="rating-feedback-section" id="feedbackForm" action="https://formspree.io/f/xeokywly" method="POST">
+    <div class="rating-feedback-section">
         <h2>ให้คะแนนเกมของเรา!</h2>
-        <div class="stars" id="ratingStars">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <input type="hidden" id="selectedRatingInput" name="rating" value="0">
-        <textarea id="feedbackText" name="feedback" placeholder="มีอะไรแนะนำเพิ่มเติมไหม?" required></textarea>
-        <button type="submit" id="submitFeedbackButton">ส่งคำแนะนำ</button>
+        <form id="feedbackForm" action="https://formspree.io/f/xvgrejkp" method="POST">
+            <div class="stars" id="ratingStars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <input type="hidden" id="selectedRatingInput" name="rating" value="0"> 
+            
+            <label style="display: block; text-align: left; margin-bottom: 5px;">อีเมลของคุณ (ไม่บังคับ):</label>
+            <input type="email" name="email" placeholder="email@example.com" style="width: calc(100% - 40px); padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-family: 'Sarabun', sans-serif; font-size: 1.1em; margin-bottom: 15px;"> 
+            
+            <label style="display: block; text-align: left; margin-top: 15px; margin-bottom: 5px;">คำแนะนำของคุณ:</label>
+            <textarea id="feedbackText" name="message" placeholder="มีอะไรแนะนำเพิ่มเติมไหม?"></textarea> 
+            
+            <button type="submit" id="submitFeedbackButton">ส่งคำแนะนำ</button>
+        </form>
         <p class="feedback-link">
             <a href="feedback_display.html" target="_blank">
                 ดูข้อเสนอแนะทั้งหมดที่นี่!
             </a>
         </p>
-    </form>
+    </div>
 
     <script>
+        // *** ฟังก์ชัน goSecret ***
+        function goSecret(url) {
+            window.location.href = url;
+        }
+
+        // *** การเรียกใช้ Element ต่างๆ ***
         const imageGallery = document.getElementById('imageGallery');
         const livingThingsDropZone = document.getElementById('livingThingsDropZone');
         const nonLivingThingsDropZone = document.getElementById('nonLivingThingsDropZone');
@@ -593,9 +623,11 @@
         const nextPageButton = document.getElementById('nextPageButton');
 
         const ratingStars = document.getElementById('ratingStars');
-        const feedbackText = document.getElementById('feedbackText');
-        const submitFeedbackButton = document.getElementById('submitFeedbackButton');
-        const selectedRatingInput = document.getElementById('selectedRatingInput');
+        const feedbackText = document.getElementById('feedbackText'); // textarea สำหรับ feedback
+        const submitFeedbackButton = document.getElementById('submitFeedbackButton'); // ปุ่มส่ง
+        const feedbackForm = document.getElementById('feedbackForm'); // อ้างถึง form
+        const selectedRatingInput = document.getElementById('selectedRatingInput'); // input hidden สำหรับคะแนน
+
 
         const allItems = [
             { id: 'item1', src: 'https://via.placeholder.com/100/FFD700/000000?text=แมว', type: 'living', alt: 'แมว' },
@@ -622,8 +654,8 @@
         ];
 
         let currentPage = 0;
-        const itemsPerPage = 20;
-        let currentShuffledItems = [];
+        const itemsPerPage = 20; // จำนวนรายการต่อหน้า
+        let currentShuffledItems = []; // รายการที่สุ่มใหม่สำหรับเกมปัจจุบัน
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -652,14 +684,7 @@
                 draggableItem.appendChild(img);
                 imageGallery.appendChild(draggableItem);
             });
-
-            updatePaginationButtons();
             addDragAndDropListeners();
-        }
-
-        function updatePaginationButtons() {
-            prevPageButton.disabled = currentPage === 0;
-            nextPageButton.disabled = (currentPage + 1) * itemsPerPage >= allItems.length;
         }
 
         function initializeGame() {
@@ -770,19 +795,20 @@
             initializeGame();
         });
 
-        prevPageButton.addEventListener('click', () => {
-            if (currentPage > 0) {
-                currentPage--;
-                displayItemsForPage(currentPage);
-            }
-        });
+        // *** Event Listener สำหรับปุ่ม "ย้อนกลับ" และ "หน้าต่อไป" ***
+        if (prevPageButton) {
+            prevPageButton.addEventListener('click', function() {
+                goSecret('https://kornvenus.github.io/The-Gentle-Room1/');
+            });
+        }
 
-        nextPageButton.addEventListener('click', () => {
-            if ((currentPage + 1) * itemsPerPage < allItems.length) {
-                currentPage++;
-                displayItemsForPage(currentPage);
-            }
-        });
+        if (nextPageButton) {
+            nextPageButton.addEventListener('click', function() {
+                goSecret('https://doonovel.com/');
+            });
+        }
+        // *** สิ้นสุดการแก้ไขปุ่มนำทาง ***
+
 
         let selectedRating = 0;
 
@@ -790,31 +816,68 @@
             if (e.target.classList.contains('star')) {
                 const value = parseInt(e.target.dataset.value);
                 selectedRating = value;
-                selectedRatingInput.value = value.toString(); // อัปเดตค่าใน input hidden ให้ตรงกับดาวที่เลือก
+                // อัปเดตค่าใน input hidden สำหรับ rating
+                if (selectedRatingInput) {
+                    selectedRatingInput.value = selectedRating.toString();
+                }
                 updateStarsDisplay();
             }
         });
 
-        const feedbackForm = document.getElementById('feedbackForm');
-        feedbackForm.addEventListener('submit', async (event) => {
-            // JavaScript จะตรวจสอบว่าช่อง textarea มีค่าหรือไม่โดยอัตโนมัติเมื่อมี required
-            // ถ้าไม่มีค่า มันจะแสดงข้อความเตือนของบราวเซอร์
-            // เราแค่ต้องมั่นใจว่า selectedRatingInput มีค่าเสมอ (ตั้งค่าเริ่มต้นเป็น 0)
+        // *** แก้ไข Event listener สำหรับ Formspree ***
+        // เปลี่ยนจาก onclick event ของ button มาเป็นการดัก submit event ของ form
+        // เพื่อให้ Formspree ทำงานได้อย่างถูกต้อง และจัดการการส่งแบบ Asynchronous
+        if (feedbackForm) { // ตรวจสอบว่ามี form นี้อยู่จริง
+            feedbackForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); // ป้องกันการ submit form แบบปกติ (ซึ่งจะรีเฟรชหน้า)
 
-            // Form จะถูกส่งตามปกติไปยัง Formspree
-            alert('ขอบคุณสำหรับคำแนะนำของคุณ! กำลังส่งข้อมูล...');
-            
-            // เนื่องจากฟอร์มจะ redirect ไปยัง Formspree's thank you page (ค่าเริ่มต้น)
-            // โค้ดด้านล่างนี้ (resetRatingFeedback) อาจจะไม่ถูกเรียกทันที
-            // หากต้องการให้ผู้ใช้อยู่หน้าเดิม ควรใช้ JavaScript's Fetch API ในการส่งข้อมูลแทน
-            // แต่สำหรับ Formspree ฟรี การส่งแบบนี้จะง่ายกว่า
-            
-            // เพื่อให้ formspree ไม่แจ้งว่า form ว่างเปล่า (หากผู้ใช้กดส่งโดยไม่ได้เลือกดาว)
-            // เราได้ตั้งค่าเริ่มต้นของ selectedRatingInput.value เป็น '0' ใน resetRatingFeedback() และใน HTML
-            // และเพิ่ม required ใน textarea เพื่อให้ต้องกรอกข้อความ
-            
-            resetRatingFeedback(); // ทำการรีเซ็ตฟอร์ม (อาจจะเกิดขึ้นหลังจาก alert แสดง)
-        });
+                const feedbackTextValue = feedbackText.value.trim();
+                
+                // ตรวจสอบข้อมูลก่อนส่ง (ถ้าไม่มีคะแนนและไม่มีข้อความ ก็แจ้งเตือน)
+                if (selectedRating === 0 && feedbackTextValue === '') {
+                    alert('โปรดให้คะแนนหรือเขียนคำแนะนำก่อนส่งนะคะ/ครับ');
+                    return; // หยุดการทำงานถ้าไม่มีข้อมูล
+                }
+                
+                // Formspree จะอ่านค่าจาก `name` attribute ของ input/textarea
+                // เราใช้ FormData เพื่อรวบรวมข้อมูลทั้งหมดใน form
+                const formData = new FormData(feedbackForm); 
+
+                // อัปเดตค่า rating ใน FormData ด้วย selectedRating
+                if (selectedRatingInput) {
+                    formData.set('rating', selectedRating.toString()); // ยืนยันการตั้งค่าคะแนน
+                }
+
+                try {
+                    const response = await fetch(feedbackForm.action, {
+                        method: feedbackForm.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json' // แจ้ง Formspree ว่าเราต้องการ JSON response
+                        }
+                    });
+
+                    if (response.ok) { // ถ้า Formspree ส่ง response สำเร็จ (สถานะ 2xx)
+                        alert('ขอบคุณสำหรับคำแนะนำ! เราได้รับข้อมูลเรียบร้อยแล้วค่ะ/ครับ');
+                        resetRatingFeedback(); // รีเซ็ตฟอร์มหลังจากส่งสำเร็จ
+                    } else {
+                        // ถ้า Formspree ส่ง error กลับมา
+                        const data = await response.json();
+                        if (Object.hasOwnProperty.call(data, 'errors')) {
+                            alert(`เกิดข้อผิดพลาดในการส่ง: ${data.errors.map(error => error.message).join(', ')}`);
+                        } else {
+                            alert('เกิดข้อผิดพลาดในการส่งคำแนะนำ กรุณาลองใหม่อีกครั้ง');
+                        }
+                    }
+                } catch (error) {
+                    // หากเกิดข้อผิดพลาดในการเชื่อมต่อเครือข่าย
+                    console.error('Error submitting feedback:', error);
+                    alert('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่อีกครั้ง');
+                }
+            });
+        }
+        // *** สิ้นสุดการแก้ไข Event Listener ของ Formspree ***
+
 
         function updateStarsDisplay() {
             const stars = ratingStars.querySelectorAll('.star');
@@ -829,9 +892,16 @@
 
         function resetRatingFeedback() {
             selectedRating = 0;
-            selectedRatingInput.value = '0'; // ตั้งค่าเริ่มต้นให้เป็น '0' เสมอ
+            if (selectedRatingInput) {
+                selectedRatingInput.value = '0'; // รีเซ็ตค่า hidden input เป็น 0
+            }
             updateStarsDisplay();
-            feedbackText.value = ''; // ล้างข้อความ
+            feedbackText.value = '';
+            // รีเซ็ตช่อง email ด้วย
+            const emailInput = document.querySelector('#feedbackForm input[name="email"]');
+            if (emailInput) {
+                emailInput.value = '';
+            }
         }
 
         document.addEventListener('DOMContentLoaded', initializeGame);
