@@ -100,26 +100,6 @@
             100% { transform: translateX(calc(100vw + 200px)); }
         }
 
-        .video-container {
-            margin-top: 40px;
-            margin-bottom: 25px;
-            width: 80%;
-            max-width: 800px;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
         .game-container {
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
@@ -524,18 +504,6 @@
         <div class="cloud"></div>
         <div class="cloud"></div>
     </div>
-
-    <div class="video-container">
-        <iframe
-            src="https://www.youtube.com/embed/your_video_id_here"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-        </iframe>
-    </div>
-
     <div class="game-container">
         <h1>เกมแยกสิ่งมีชีวิตและสิ่งไม่มีชีวิต</h1>
         <p class="instruction">ลากรูปภาพไปวางในช่อง "สิ่งมีชีวิต" หรือ "สิ่งไม่มีชีวิต" ให้ถูกต้อง</p>
@@ -594,11 +562,6 @@
             
             <button type="submit" id="submitFeedbackButton">ส่งคำแนะนำ</button>
         </form>
-        <p class="feedback-link">
-            <a href="feedback_display.html" target="_blank">
-                ดูข้อเสนอแนะทั้งหมดที่นี่!
-            </a>
-        </p>
     </div>
 
     <script>
